@@ -1,0 +1,6 @@
+문자나 문자열을 키값으로 해서 저장하거나 문자나 문자열을 카운팅하거나 활용해서 어떤 자료 구조에 대응시키는 것을 <해쉬> 라고함.
+숫자를 카운팅 할때도 해쉬를 사용함. 굳이 배열을 사용 안해도 됨. 
+key : value 이렇게 한쌍의 자료구조가 해쉬
+
+["muzi", "frodo", "apeach", "neo"] 
+["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"]
