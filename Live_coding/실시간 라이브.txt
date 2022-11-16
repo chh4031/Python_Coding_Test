@@ -1,0 +1,219 @@
+1. for
+for 문의 range함수는 범위 함수이다.
+range는 사용하는 메모리의 양에서도 차이가 있다.
+for i in (0,1,2,3,4,5,6,7,8,9)의 형태는 메모리에 0~9까지 전부 들어간다.
+for i in ragne(시작, 끝, 증가수) 옆과 같이 3개만 사용되서 메모리를 적게 쓴다.
+
+2. 메모리 확인
+import sys
+print(sys.getsizeof(사용할 함수, 형태)) 형태에는 bytes 등 파이썬에서 메모리를 확인하는 함수이다.
+
+3. zip
+ids = [1001, 1002, 1003, 1004]
+names = ['a', 'b', 'c', 'd']
+grades = [34, 56, 78, 90]
+
+for i in ranage(len(names));
+print(ids[i], names[i], grades[i]) 형태이다
+
+zip 함수를 쓰면
+for record in zip(ids, names, grades):
+print(record)의 형태이다.
+
+결과는 둘다 같음
+응용
+l = ['a', 'b', 'c', 'd']
+for i, x in zip(range(len(l), l)):
+print(i, x)
+
+l = ['a', 'b', 'c', 'd']
+for i, x in enumerate(l)
+print(i, x)
+=> enumerate(l)은 위의 zip(range(len(l), l))과 같은형식임.
+
+4. 변수할당, 언팩킹
+unpacking = 짐을 꺼내는것, 풀다 packing = 싸다, 묶다
+[1,2,3] => 1,2,3 으로 꺼내주는 역할
+
+l = [1,2,3] => 튜플도 가능함.
+a, b, c = l[0], l[1], l[2] 일반적인 형태
+
+a, b, c = l 으로 위와 같은 효과를 낼 수 있다.
+
+for a, b in [[1,2], [2,3], [3,4]]:
+print(a, b) 로 언팩이 가능하다. 단 변수의 수와 배열 안의 수가 다르면 오류가 난다.
+원래는 인덱싱으로 사용함. ex) a[0], a[1]이와 같이 씀
+
+for i, {a, b} in [[1, [1,2]], [2, [2,3]], 3, [4,5]]]: => 어떻게 언팩할까? a, b, c 3개를 넣으면 안된다. 
+print(i, a, b) 위와 같이 사용한다.
+
+5. 함수, 함수에서의 언팩킹
+def f(a, b, c):
+return a+b+c
+query = [[1, 2, 3], [3, 2, 1], [4, 5, 0], [1, 1, 2]]
+for q in query:
+print(f(q[0)], f(q[1)], f(q[2]))
+
+for q in query:
+print(f(*q))
+*을 붙이면 인자가 하나씩 들어간다.
+
+파이썬 내장함수에서 l을 사용가능한 경우가 많다.
+print(1,2,3,4,5)
+l = ['apple', 'banana', 'carrot']
+print(*l)을 사용 => 리스트를 언팩시켜서 출력시켜준다.
+
+**도 있다.
+def f(a, b, c):
+return a+b+c
+d = {'b' : 2,'a' : 1, 'c' : 3}
+f(**d) => 별 두개는 키 값을 넘겨주는 역할을 한다.
+
+6.파이썬에서 리스트의 생성
+[0-,. 1, 4, 9, 16, .,,., 81]  이런걸 만들고 싶다
+
+res = []
+for i in range(10):
+res.append(i*i)
+print(res) => 대부분의 언어의 사용방식
+
+하지만 파이썬에서는 지능형 리스트라는 것도 존재함. 리스트안에서 for문을 돌리는 형태
+[i*i for i in range(10)] => 위와 결과는 같다.
+
+res = []
+for i in range(3):
+	for j in range(3):
+		res.append((i, j))
+print(res)
+
+[(i, j) for i in range(3) for j in range(3)]와 같이 위의 코드를 한줄로 표현가능 
+
+res = []
+for i in range(3):
+	for j in range(3):
+		if i != j:
+		res.append((i, j))
+print(res)
+
+[(i, j) for i in range(3) for j in range(3) if i != j] 조건을 넣어 필터링 기능도 가능하다. 2개는 안된다는데 되긴 되는듯?
+
+{a:1, b:2, c:3} 이형태를 만들고 싶다 지능형 리스트로 가능
+{chr(v):v for v-65 in range(65, 90)} => 'A' : 0 ~ 'Z' : 25 까지 출력된다.(출력형태), chr은 아스키 코드를 출력하는것.
+이는 리스트가 아니여도 세트, 튜플 등에도 사용될 수 있다.
+
+7. 파이썬의 기본자료구조 구현
+선형 자료구조를 의미, stack, queue, heap 의미
+셋다 넣고 빼는 형태인데 무엇을 빼는가에 따라 달라짐
+맨 마지막 요소를 빼면 stack ex) 뒤로가기와 같은 기능
+젤 오래있었던 요소를 빼면 queue ex) 선수가 빠지는 것과 같음
+젤 작은 요소를 빼면 heap ex) 1 2, 3, -4, 6 일때 가장작은 수부터 빠진다. -4 1 2 3 6으로
+
+stack
+stack = []
+stack.append(1)
+stack.append(2)
+stack.append(3)
+
+print(stack.pop())
+print(stack.pop())
+print(stack.pop())
+
+큐의 경우
+print(stack.pop(0))
+print(stack.pop(0))
+print(stack.pop(0))
+
+queue
+qd를 사용하는 방식
+from collections import deque
+
+dq = deque([0, 1, 2, 3, 4])
+dq.append(5)
+print(dq)
+
+dq.popleft()
+print(dq)
+
+
+popleft와 appendleft는 둘다 왼쪽부터 빼거나 함.
+
+l = list(range(1000000))
+dq = deque(range(1000000))
+
+%%time
+l.insert()
+
+%%time
+l.pop()
+
+%%time
+dq.popleft()
+
+dq를 쓰냐 안쓰냐에 따라 속도가 달라진다. dq가 더 빠름
+
+%%time
+l[50000]
+
+%%time
+dq[50000]
+
+중간의 요소를 찾을 경우는 dq가 더 느리다는 것을 알 수 있다. 맨 끝에서 왔다갔다 할때 dq를 사용하는 것이 좋다.
+
+heap
+리스트로 구현함
+from heapq import heapify, heappop, heappush
+
+l = [1, 5, 2, 7, 9,. 10]
+heapify(l) => 내부 자료를 힙화 시키는것 가장 작은 수가 왼쪽으로 감, 초기화를 시키는것
+print(l)
+
+heappush(l,0)
+print(l)
+추가된 수가 가장 작은 수라 왼쪽으로 가는것을 알 수 있다.
+
+min_tiem heappop(l)
+print(l, min_item)
+숫자를 하나 삭제하고 가장 작은 수가 다시 왼쪽으로 가는 것을 알 수 있다.
+
+8. 완전탐색 함수
+4개짜리 비밀번호를 알아내는 알고리즘을 짜라, 무식한게 0000 ~ 9999임. 즉 모든것을 탐색한다고 해서 완전탐색. 파이썬에선 이 함수들이 존재한다.
+
+Product
+top = ['반팔', '나시', '가디건']
+#3일동안 입을 경우의 수
+	for x in top:
+		for y in top:
+			for z in top:
+				print(x, y, z)
+위의 코드는 3일치라 코드가 적은 것을 알 수 있다. 즉 코드가 많아지면 복잡함 => product 사용
+
+from itertools import product
+for p in product(top, top, top)
+	print(p)
+product는 조합을 만들어 준다는 의미
+위의 코드에서 꼭 top이 3개들어가서 같은 것을 만들 필요는 없다. 다른것을 넣어서 조합도 가능
+
+Permutation 순열 순서고려
+from itertools import Permutation
+top = ['반팔1', '반팔2', '반팔3', '나시', '가디건1', '가디건2']
+
+for p in permutations(top, 5) => 5개로 순열을 만들어줌
+	print(p) 
+
+
+Combinations - 조합 순서고려 X
+from itertools import Combinations
+top = ['반팔1', '반팔2', '반팔3', '나시', '가디건1', '가디건2']
+for c in combinations(top, 3) 3개를 순서상관없이 뽑아줌
+	print(c)
+
+combinations_with_replacement = 조합인데 뽑은거 또 뽑기
+from itertools import combinations_with_replacement
+top = ['반팔1', '반팔2', '반팔3', '나시', '가디건1', '가디건2']
+for a in combinations_with_replacement(top, 5) 이미 뽑은것을 또 포함시켜 주는 형태
+	print(a)
+
+
+
+2차시 부터는 녹화본을 참고하기
+
